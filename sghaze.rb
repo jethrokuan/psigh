@@ -25,12 +25,8 @@ class SgHaze < Sinatra::Base
         if original_data[index][1] == "-"
           new_data[original_data[index][0]] = "-"
         else
-          result = 3*original_data[index][1].to_i-original_data[index-1][1].to_i-original_data[index-2][1].to_i
-          if result < 0
-            new_data[original_data[index][0]] = "0"
-          else
-            new_data[original_data[index][0]] = result.to_s
-          end
+          result = 3*original_data[index][1].to_i-new_data[original_data[index-1][0]].to_i-new_data[original_data[index-2][0]].to_i
+          new_data[original_data[index][0]] = result.to_s
         end
       end
     end
@@ -47,7 +43,7 @@ class SgHaze < Sinatra::Base
       end
     end
     arr.each do |a|
-      a.gsub!(/\s/,"")
+      a.gsub!(/\s/,"").gsub!("-","null")
     end
     arr.reject!{|a| a.empty?}
     hash_data=Hash.new

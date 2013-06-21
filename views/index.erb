@@ -41,10 +41,10 @@
         },
         series: [{
             name: '3 Hour PSI Moving Average',
-            data: <%=@three_hour_data.values.to_s.gsub(/"/,'').gsub("-",'null')%>
+            data: <%=@three_hour_data.values.to_s.gsub(/"/,'')%>
         }, {
             name: 'Hourly Estimated PSI',
-            data: <%=@hourly_data.values.to_s.gsub(/"/,'').gsub("-",'null')%>
+            data: <%=@hourly_data.values.to_s.gsub(/"/,'').gsub("-","")%>
         }]
     });
 });
