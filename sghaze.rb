@@ -1,6 +1,5 @@
 class SgHaze < Sinatra::Base
-  def current_time
-    hour = Time.now.hour
+  def current_time(hour)
     if hour < 12
       if hour == 0
         current_time = "12AM"
@@ -10,7 +9,9 @@ class SgHaze < Sinatra::Base
     else
       current_time="#{hour-12}PM"
     end
+    return current_time
   end
+
   def hourly_data
     original_data = data().to_a
     new_data = Hash.new
@@ -24,7 +25,12 @@ class SgHaze < Sinatra::Base
         if original_data[index][1] == "-"
           new_data[original_data[index][0]] = "-"
         else
-          new_data[original_data[index][0]] = (3*original_data[index][1].to_i-original_data[index-1][1].to_i-original_data[index-2][1].to_i).to_s
+          result = 3*original_data[index][1].to_i-original_data[index-1][1].to_i-original_data[index-2][1].to_i
+          if result < 0
+            new_data[original_data[index][0]] = "0"
+          else
+            new_data[original_data[index][0]] = result.to_s
+          end
         end
       end
     end
@@ -50,11 +56,16 @@ class SgHaze < Sinatra::Base
     end
     return hash_data
   end
-  
+
   def current_reading
     current = data()
-    return current[current_time()]
+    if current[current_time(Time.now.hour)] == "-"
+      return current[current_time(Time.now.hour-1)]
+    else
+      return current[current_time(Time.now.hour)]
+    end
   end
+
   get '/' do
     @current_reading = current_reading()
     @hourly_data = hourly_data()

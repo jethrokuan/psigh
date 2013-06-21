@@ -5,11 +5,11 @@
   <link href='http://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script src="http://code.highcharts.com/highcharts.js"></script>
-  <title>Index</title>
+  <title><%=@current_reading%></title>
   </head>
   <body>
   <div class="body">
-    <h1>Pollutants Standards Index:</h1>
+    <h1>Pollutants Standards Index for <%=current_time(Time.now.hour)%>:</h1>
     <h1 id="current_reading">
       <%=@current_reading%>
     </h1>
@@ -19,7 +19,7 @@
     <center><div id="container"></div></center>
   <div style="height:10%" class="footer">
     <h3>&copy; built with all concern by Jethro ):</h3>
-    <h6>DISCLAIMER: Hourly PSI were calculated using a very terrible algorithm now, and should be taken with buckets of salt</h6>
+    <h6>DISCLAIMER: Hourly PSI are calculated using a very terrible algorithm now, and should be taken with buckets of salt</h6>
   </div>
   </div>
   <script type="text/javascript" charset="utf-8">
